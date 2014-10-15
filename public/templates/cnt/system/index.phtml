@@ -1,0 +1,54 @@
+<?php echo $this->doctype(Zend_View_Helper_Doctype::HTML5); ?>
+<html lang="en">
+<head>
+	<?php echo $this->headTitle(); ?>
+	<?php echo $this->headMeta(); ?>
+	<?php echo $this->headLink(); ?>
+	<?php echo $this->headScript(); ?>
+	
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script type='text/javascript' src="/public/templates/cnt/system/js/bootstrap.min.js"></script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <link rel="shortcut icon" href="img/computer.ico">
+</head>
+<body>
+	
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+			<!-- ******************* main menu and logo ******************* -->
+			<?php $active = 1; include("includes/header.php"); ?>
+		</div>
+	</div>
+	
+	<!-- ***************************** Banner slide ************************ -->
+	<?php include ("includes/banner-slide.php"); ?>
+	
+	<!-- ***************************** Dich vu cua chung toi *************************** -->
+	<?php echo $this->blkServiceFeatured(); ?>
+	<!-- ***************************** End dich vu cua chung toi *************************** -->
+	
+	<!-- ***************************** Gioi thieu cong ty *************************** -->
+	<?php echo $this->layout()->content; ?>
+	<!-- ***************************** End gioi thieu cong ty *************************** -->
+	
+	<div class="row partner">
+		<div class="col-md-12">
+			<!-- ************************* doi tac - khach hang ************************* -->
+			<?php include("includes/partner.php"); ?>
+		</div>
+	</div>
+	
+	<!-- ********************** footer section ************************** -->
+	<?php include("includes/footer.php"); ?>
+	<!-- ********************** End footer section ********************** -->
+	
+</body>
+</html>
