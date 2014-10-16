@@ -92,30 +92,27 @@ class Admin_AdminExcelController extends Zendvn_Controller_Action {
 						//code import viet o day ....
 						$messenger="IMPORT Successfull";
 							$objPHPExcel = new PHPExcel();
-		
-		 
-		$objPHPExcel123 = PHPExcel_IOFactory::createReader('Excel2007');//Excel2003XML
+
+		//$objPHPExcel123 = PHPExcel_IOFactory::createReader('Excel2007');//Excel2003XML
+		if($extension=='xls'){$filetype='Excel5';}
+		if($extension=='xlsx'){$filetype='Excel2007';}
+		$objPHPExcel123 = PHPExcel_IOFactory::createReader($filetype);
 		// $filename ='Attendance1.xlsx';//cho nay dang fix cung//'october-2014.xlsx';//'my-data-sheet1.xls';// 'october-2014.xls';
-		 $filename =  $fileInfo['excel']['tmp_name'];//$temp.$extension;
-			$excel2 = $objPHPExcel123->load($filename);
-			//$excel2->getActiveSheet()->getProtection()->setSheet(true);
-			
-		  
+		$filename =  $fileInfo['excel']['tmp_name'];//$temp.$extension;
+		$excel2 = $objPHPExcel123->load($filename);
 	
-  $dem_arr=array();
-  $arr_salary=array();
-  $array_INCENTIVE =array();
-  $arr_id=array();
-  $arr_LOCATION=array();
+  	$dem_arr=array();
+ 	$arr_salary=array();
+  	$array_INCENTIVE =array();
+  	$arr_id=array();
+  	$arr_LOCATION=array();
 	foreach ($excel2->getWorksheetIterator() as $worksheet) {
-		$worksheetTitle     = $worksheet->getTitle();
-	  
+		$worksheetTitle     = $worksheet->getTitle();	  
 		if($worksheetTitle =='Sheet1'){
 			$highestRow         = $worksheet->getHighestRow(); // e.g. 10
 			$highestColumn      = $worksheet->getHighestColumn(); // e.g 'F'
 			$highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn);
-			$nrColumns = ord($highestColumn) - 64;
-			
+			$nrColumns = ord($highestColumn) - 64;			
 				for ($row = 1; $row <= $highestRow; ++ $row) {
 					$dem=0;
 					$name='';
@@ -245,23 +242,21 @@ class Admin_AdminExcelController extends Zendvn_Controller_Action {
 		}
 		
 	}
-	
-	header('Content-Disposition: attachment;filename="my_excel.xlsx"');
+	$output_name=$filetype;
+	$acx='Content-Disposition: attachment;filename="my_excel.'.$extension.'"';
+	//echo $acx;die;
+	header($acx);  //"mysq_excel.xlsx"
 	header('Content-Type: application/vnd.ms-excel');
 	//header('Content-Disposition: attachment;filename="'.$safe_filename.'"');
 	header('Cache-Control: max-age=0');	
 	ob_end_clean(); 
-	$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007'); 
+	$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, $filetype); 
 	$objWriter->save('php://output'); 
-	//header("location: admin/admin-excel/sdfsdf");
-	//echo "<script> document.location.href='admin/admin-excel/sdfsdf';</script>";
-/*	*/
-					}else{
-						$messenger="Error file ,please try again ! ";
 
-					}
-
-				}
+	}else{
+		$messenger="Error file ,please try again ! ";
+		}
+	}
 		$this->view->mes=$messenger;		
 	}
 }
